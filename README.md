@@ -1,2 +1,3 @@
-# Partial Applications y Curring en ES6
+# Partial Applications y Currying en ES6
 
+## ¿Diferencia entre *aplicación parcial* y *currificación*? 
