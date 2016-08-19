@@ -2,7 +2,11 @@
 
 ## ¿Diferencia entre *aplicación parcial* y *currificación*? 
 Blabla blabla bla 
-Ble:
+Ble: ( https://medium.com/javascript-scene/curry-or-partial-application-8150044c78b8#.fai0znu0q )
+### Aplicación Parcial
+
+### Curry
+
 ### Aplicación Parcial
 Blabla app parcial blabla wea wea
 
