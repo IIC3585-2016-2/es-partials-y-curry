@@ -3,9 +3,6 @@
 ## ¿Diferencia entre *aplicación parcial* y *currificación*? 
 Blabla blabla bla 
 Ble: ( https://medium.com/javascript-scene/curry-or-partial-application-8150044c78b8#.fai0znu0q )
-### Aplicación Parcial
-
-### Curry
 
 ### Aplicación Parcial
 Blabla app parcial blabla wea wea
@@ -14,8 +11,7 @@ Blabla app parcial blabla wea wea
 Bliblubla
 
 ## Ejemplos
-
-
+blablablalblabblaabl
 ```JavaScript
 // Blabla
 const insertar = (ejemplo) => ejemplo;
