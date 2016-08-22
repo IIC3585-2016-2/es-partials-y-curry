@@ -195,6 +195,7 @@ objects.map((o) => o.id); //=> [1, 2, 3]
 Una manera de hacer que el código se lea como la lógica del dominio en que estamos trabajando es con currys:
 ```Javascript
 var map = curry((fn, value) => value.map(fn));
+var get = curry((property, object) => object[property]);
 var getIDs = map(get('id'));
 
 getIDs(objects) //= [1, 2, 3]
