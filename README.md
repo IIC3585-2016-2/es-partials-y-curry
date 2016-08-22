@@ -164,7 +164,7 @@ var sub = (a, b) => b - a;
 sub5 = _.partialRight(sub, 5);
 sub5(20); //=> -15
 ```
-Adicionalmente se cuenta con funciones currificadoras `_.curry(func, [arity=fn.length])` (que actúa de la misma forma que en Wu) y `_.curryRight(func, [arity=fn.length])`.
+Adicionalmente se cuenta con funciones currificadoras `_.curry(fn, [arity=fn.length])` (que actúa de la misma forma que en Wu) y `_.curryRight(fn, [arity=fn.length])`.
 
 ### Ramda.js
 Con [Ramda](http://ramdajs.com/docs/#curry) también podemos hacer uso del valor placeholder. Si `f(...args)` es la función a currificar y `var g = R.curry(f)`, entonces las siguientes son equivalentes:
