@@ -56,7 +56,7 @@ const sumaCurrificada = (x) => (y) => x + y;
 Supongamos la función
 ```JavaScript
 function formatText(tag, text) {
-    return '<' + tag + '>' + text + '</' + tag + '>';
+  return '<' + tag + '>' + text + '</' + tag + '>';
 }
 
 formatText('p', 'some text'); //=> "<p>some text</p>"
@@ -74,13 +74,13 @@ addTwoAndThreeAndTheseTwoUp(1, 2); //=> 8
 Pero si queremos currificar `addTheseFourUp()` sin librerías, una manera de hacerlo es
 ```Javascript
 function curriedFour(a) {
-    return function(b) {
-        return function(c) {
-            return function (d) {
-                return a + b + c + d;
-            }
-        }
+  return function(b) {
+    return function(c) {
+      return function (d) {
+        return a + b + c + d;
+      }
     }
+  }
 }
 curriedFour(1)(2)(3)(4); //=> 10
 ```
@@ -88,29 +88,39 @@ curriedFour(1)(2)(3)(4); //=> 10
 Para hacerlo de manera automática, independiente de la función de entrada, tendríamos que recurrir a métodos más complejos:
 ```JavaScript
 function curry(fn) {
-    var args = [].slice.call(arguments, 1);
+  var args = [].slice.call(arguments, 1);
     function curried(fnArgs) {
-        if (fnArgs.length >= fn.length) {
-            return fn.apply(null, fnArgs);
-        }
-
-        return function () {
-            return curried(fnArgs.concat([].slice.apply(arguments)));
-        };
+      if (fnArgs.length >= fn.length) {
+        return fn.apply(null, fnArgs);
     }
-    return curried(args);
+      return function () {
+        return curried(fnArgs.concat([].slice.apply(arguments)));
+      };
+    }
+  return curried(args);
 }
 
-function mult(a, b) {	return a*b; }
+function mult(a, b) { return a*b; }
 
 var multCurr = curry(mult)
 var multByTwo = multCurr(2)
-var twoTimesThree = multByTwo(3) //=> 6
-var twoTimesFour = multByTwo(4) //=> 8
+var twoTimesThree_v1 = multByTwo(3) //=> 6
+var twoTimesThree_v2 = multCurr(2)(3) //=> 6
 ```
 
 ### ES6
-Por suerte asdsd
+En ECMAScript 6 podemos obtener una expresión más sencilla: 
+```Javascript
+function curry(fn, ...args) {
+  var curried = (fnArgs) => {
+    if(fnArgs.length >= fn.length) {
+      return fn.apply(this, fnArgs);
+    }
+    return (...cArgs) => curried([...fnArgs, ...cArgs]);
+  }
+  return curried(args);
+}
+```
 
 ## Implementaciones
 <!--- Tanto las librerías Underscore.js como Ramda.js cuentan con funciones para precisamente la aplicación parcial de funciones. Veamos algunos ejemplos:--->
