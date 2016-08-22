@@ -42,14 +42,6 @@ Y listo.
 Ahora bien, si lo notan, nosotros realizamos el currying, digamos que de izquierda a derecha. Dejando como el primer parámetro a rellenar el de más a la izquierda (lista) y como parámetro de la funsión final el de más a la derecha, (filtro). Esto no es necesario así,  uno puede crear una función currificada tanto de izquierda a derecha, o de derecha izquierda. Es más, más adelante mostraremos librerías que siguen funcionando en ES6, que son capaces de realizar estas currificaciones de manera automática para nosotros, dejándonos de manera cómoda, funciones currificadas y listas para especificar.--->
 
 
-<!---## Ejemplos Básicos
-blablablalblabblaabl
-```JavaScript
-// Blabla
-const insertar = (ejemplo) => ejemplo;
-const sumaCurrificada = (x) => (y) => x + y;
-```
---->
 ## Currying en ES5 vs ES6
 <!--- Lo que dice acá por ejemplo: https://gist.github.com/ryanseddon/7330082 --->
 ### ES5
@@ -123,7 +115,7 @@ function curry(fn, ...args) {
 ```
 
 ## Implementaciones
-<!--- Tanto las librerías Underscore.js como Ramda.js cuentan con funciones para precisamente la aplicación parcial de funciones. Veamos algunos ejemplos:--->
+
 Existen variadas librerías que tienen implementados estos métodos para su ágil uso. Algunas de ellas son:
 
 ### Wu.js
