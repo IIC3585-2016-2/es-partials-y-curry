@@ -171,10 +171,55 @@ g(_, 2)(_, 3)(1)
 Adicionalmente también se puede especificar la aridad de la función currificada al igual que en Wu, con la función `R.curryN(fn.length, fn)`.
 
 ## ...¿y para qué sirve?
-https://hughfdjackson.com/javascript/why-curry-helps/
-http://fr.umio.us/favoring-curry/
+Supongamos que tenemos una función `curry()`. 
+A parte de los ejemplos anteriores, la currificación ayuda cuando queremos manipular data que nos llega del servidor. Al igual que las promesas, los currys devuelven contenedores (funciones en este caso) que comparten la misma interfaz y que nos permiten lidiar con ellos de manera estandarizada. Éstos tienen un mecanismo de iteración que hacen que no haga más trabajo de lo que puede hacer con los argumentos suplidos. Por ejemplo a la función `var a = curry(fn(b,c))` no tenemos que aplicarle inmediatamente el parámetro `c`. Podemos esperar aplicarlo una vez que contemos con el resultado de una promesa:
+```Javascript
+const nextFn = a(b);
+doSomeStuff().then(() => nextFn(c));
+```
+Veamos un ejemplo concreto. 
+Suponer que tenemos una lista de objetos y queremos mapearla bajo una función:
+```Javascript
+var objects = [{ id: 1 }, { id: 2 }, { id: 3 }];
+objects.map((o) => o.id); //=> [1, 2, 3]
+```
+Una manera de hacer que el código se lea como la lógica del dominio en que estamos trabajando es con currys:
+```Javascript
+var map = curry((fn, value) => value.map(fn));
+var getIDs = map(get('id'));
 
+getIDs(objects) //= [1, 2, 3]
+```
+Esto mismo lo podemos aprovechar para tareas del mismo tipo. Si tenemos el siguiente objeto:
+```Javascript
+{
+  "user": "hughfdjackson",
+  "posts": [
+    { "title": "why curry?", "contents": "..." },
+    { "title": "prototypes: the short(est possible) story", "contents": "..." }
+  ]
+}
+```
+y queremos obtener el título de todos sus posteos, una manera tradicional de hacerlo sería:
+```Javascript
+fetchFromServer()
+  .then(JSON.parse)
+  .then((data) => data.posts)
+  .then((posts) => posts.map((post) => post.title))
+```
+pero podemos expresarlo de manera más limpia y semántica con currying:
+```Javascript
+fetchFromServer()
+  .then(JSON.parse)
+  .then(get('posts'))
+  .then(map(get('title')))
+```
 ### Referencias
-
-1. https://medium.com/javascript-scene/curry-or-partial-application-8150044c78b8#.fai0znu0q
-
+- [Favoring Curry](http://fr.umio.us/favoring-curry/) (Recomendado)
+- [Why Curry Helps](https://hughfdjackson.com/javascript/why-curry-helps/)
+- [Curry or Partial Application?](https://medium.com/javascript-scene/curry-or-partial-application-8150044c78b8#.fai0znu0q)
+- [Partial Application in JavaScript](http://benalman.com/news/2012/09/partial-application-in-javascript/#partial-application-vs-currying)
+- [ECMAScript 6 and Currying](http://macr.ae/article/es6-and-currying.html)
+- [What's the difference between Currying and Partial Application?](http://raganwald.com/2013/03/07/currying-and-partial-application.html)
+- [Hey Underscore, You're Doing It Wrong!](https://www.youtube.com/watch?v=m3svKOdZijA)
+- [Functional Programming Jargon](https://github.com/hemanth/functional-programming-jargon)
