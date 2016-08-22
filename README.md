@@ -119,7 +119,7 @@ function curry(fn, ...args) {
 Existen variadas librerías que tienen implementados estos métodos para su ágil uso. Algunas de ellas son:
 
 ### Wu.js
-En [Wu.js](https://fitzgen.github.io/wu.js/#curryable) encontramos un decorador `.curryable()` que currifica automáticamente la función a la que se lo aplicamos. Opcionalmente se le puede pasar el número máximo de argumentos para currificar como segundo argumento:
+En [Wu.js](https://fitzgen.github.io/wu.js/#curryable) encontramos un decorador `.curryable()` que currifica automáticamente la función a la que se lo aplicamos. Opcionalmente se le puede pasar el número máximo de argumentos para currificar como segundo argumento. En caso contrario queda por defecto como el número total de argumentos de la función `fn.length`:
 ```Javascript
 var add = wu.curryable((a, b, c) => a + b + c);
 
@@ -145,20 +145,30 @@ getOdds([1, 2, 3, 4, 5]); //=> [1, 3, 5]
 ```
 
 ### Underscore.js
-`_.partial`
+En Underscore tenemos [una función](http://underscorejs.org/#partial) que permite la aplicación parcial (`_.partial`) de funciones de manera inmediata:
 ```JavaScript
-var subtract = (a, b) => { b - a };
-sub5 = _.partial(subtract, 5);
-sub5(20);
-=> 15
-
-// Using a placeholder
+var sub = (a, b) => b - a;
+sub5 = _.partial(sub, 5);
+sub5(20); //=> 15
+```
+Una ventaja de usar esta implementación es que Underscore permite la especificación de *placeholders* para usar fijar un cierto argumento:
+```Javascript
 subFrom20 = _.partial(subtract, _, 20);
-subFrom20(5);
-=> 15
+subFrom20(5); //=> 15
 ```
 
 ### Ramda.js
+Con [Ramda](http://ramdajs.com/docs/#curry) también podemos hacer uso del valor placeholder. Si `f(...args)` es la función a currificar y `var g = R.curry(f)`, entonces las siguientes son equivalentes:
+````Javascript
+g(1, 2, 3)
+g(_, 2, 3)(1)
+g(_, _, 3)(1)(2)
+g(_, _, 3)(1, 2)
+g(_, 2)(1)(3)
+g(_, 2)(1, 3)
+g(_, 2)(_, 3)(1)
+```
+Adicionalmente también se puede especificar la aridad de la función currificada al igual que en Wu, con la función `R.curryN(fn.length, fn)`.
 
 ## ...¿y para qué sirve?
 https://hughfdjackson.com/javascript/why-curry-helps/
