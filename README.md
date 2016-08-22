@@ -104,13 +104,13 @@ var twoTimesThree_v2 = multCurr(2)(3) //=> 6
 En ECMAScript 6 podemos obtener una expresión más sencilla: 
 ```Javascript
 function curry(fn, ...args) {
-  var curried = (fnArgs) => {
+  var curried = (...fnArgs) => {
     if(fnArgs.length >= fn.length) {
       return fn.apply(this, fnArgs);
     }
     return (...cArgs) => curried([...fnArgs, ...cArgs]);
   }
-  return curried(args);
+  return curried(...args);
 }
 ```
 
