@@ -32,8 +32,9 @@ Podemos notar que tenemos una seguidilla de funciones que nos crean de manera en
 ```JavaScript
 var filtrarConLista = filtrarCurrificado(lista);
 var filtrarConTipoYLista = filtrarConLista(tipo);
+
+Ahora, nos retornó una última funsión que está esperando el filtro a aplicar, para finalmente ordenar la lista, con el tipo que le dimos a lo largo de todos estos pasos: var listaOrdenada = filtrarConListaYTipo(filtro); 
 ```
-Ahora, nos retornó una última funsión que está esperando el filtro a aplicar, para finalmente ordenar la lista, con el tipo que le dimos a lo largo de todos estos pasos: ```JavaScript var listaOrdenada = filtrarConListaYTipo(filtro); ```
 
 Parece engorroso a simplemente vista, pero si uno crea una función desde el principio, no es necesario tampoco hacer todos estos pasos, si uno no desea crear cada uno de los, llámese subfiltros. por ejemplo, podríamos llamar directamente a la función completa. Tan sólo que donde sabemos que la primera retorna una función, la segunda ídem, y ya la tercera nos retorna la lista, pues, tenemos que entregarle a cada una de ellas su parámetro de manera separada a los demás, miren:
 
