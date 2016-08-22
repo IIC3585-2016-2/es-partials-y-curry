@@ -32,32 +32,92 @@ Podemos notar que tenemos una seguidilla de funciones que nos crean de manera en
 ```JavaScript
 var filtrarConLista = filtrarCurrificado(lista);
 var filtrarConTipoYLista = filtrarConLista(tipo);
-
-Ahora, nos retornó una última funsión que está esperando el filtro a aplicar, para finalmente ordenar la lista, con el tipo que le dimos a lo largo de todos estos pasos: var listaOrdenada = filtrarConListaYTipo(filtro); 
 ```
+Ahora, nos retornó una última función que está esperando el filtro a aplicar para finalmente ordenar la lista con el tipo que le dimos a lo largo de todos estos pasos: `var listaOrdenada = filtrarConListaYTipo(filtro);`
 
-Parece engorroso a simplemente vista, pero si uno crea una función desde el principio, no es necesario tampoco hacer todos estos pasos, si uno no desea crear cada uno de los, llámese subfiltros. por ejemplo, podríamos llamar directamente a la función completa. Tan sólo que donde sabemos que la primera retorna una función, la segunda ídem, y ya la tercera nos retorna la lista, pues, tenemos que entregarle a cada una de ellas su parámetro de manera separada a los demás, miren:
-
+Ahora bien, podríamos llamar directamente a la función completa como `var listaFiltrada = filtrarCurrificado(lista)(tipo)(filtro);` pues estamos llamando a la misma función sucesivas veces sobre distintos argumentos.
+<!---Parece engorroso a simplemente vista, pero si uno crea una función desde el principio, no es necesario tampoco hacer todos estos pasos, si uno no desea crear cada uno de los, llámese subfiltros. por ejemplo, podríamos llamar directamente a la función completa. Tan sólo que donde sabemos que la primera retorna una función, la segunda ídem, y ya la tercera nos retorna la lista, pues, tenemos que entregarle a cada una de ellas su parámetro de manera separada a los demás, miren:
 var listaFiltrada = filtrarCurrificado(lista)(tipo)(filtro);
-
 Y listo.
+Ahora bien, si lo notan, nosotros realizamos el currying, digamos que de izquierda a derecha. Dejando como el primer parámetro a rellenar el de más a la izquierda (lista) y como parámetro de la funsión final el de más a la derecha, (filtro). Esto no es necesario así,  uno puede crear una función currificada tanto de izquierda a derecha, o de derecha izquierda. Es más, más adelante mostraremos librerías que siguen funcionando en ES6, que son capaces de realizar estas currificaciones de manera automática para nosotros, dejándonos de manera cómoda, funciones currificadas y listas para especificar.--->
 
-Ahora bien, si lo notan, nosotros realizamos el currying, digamos que de izquierda a derecha. Dejando como el primer parámetro a rellenar el de más a la izquierda (lista) y como parámetro de la funsión final el de más a la derecha, (filtro). Esto no es necesario así,  uno puede crear una función currificada tanto de izquierda a derecha, o de derecha izquierda. Es más, más adelante mostraremos librerías que siguen funcionando en ES6, que son capaces de realizar estas currificaciones de manera automática para nosotros, dejándonos de manera cómoda, funciones currificadas y listas para especificar.
 
-
-## Ejemplos Básicos
+<!---## Ejemplos Básicos
 blablablalblabblaabl
 ```JavaScript
 // Blabla
 const insertar = (ejemplo) => ejemplo;
 const sumaCurrificada = (x) => (y) => x + y;
 ```
-
+--->
 ## Currying en ES5 vs ES6
-Lo que dice acá por ejemplo: https://gist.github.com/ryanseddon/7330082
+<!--- Lo que dice acá por ejemplo: https://gist.github.com/ryanseddon/7330082 --->
+### ES5
+Supongamos la función
+```JavaScript
+function formatText(tag, text) {
+    return '<' + tag + '>' + text + '</' + tag + '>';
+}
+
+formatText('p', 'some text'); //=> "<p>some text</p>"
+```
+Una manera de aplicar parcialmente una función en ES5 es usando la función `.bind()`:
+```JavaScript
+var makeStrong = formatText.bind(this, 'strong');
+makeStrong('this is important'); //=> "<strong>this is important</strong>"
+```
+Con `.bind()` podemos cambiar la aridad de la función de entrada, pero no es currying pues no retornamos funciones necesariamente de aridad 1. Lo que `.bind()` permite es aplicación parcial, fijando argumentos de la función a la que se aplica para retornar una de menor aridad. Consideremos la siguiente función: `function addTheseFourUp(a, b, c, d) { return a + b + c + d; }`. Podemos fijar algunos de sus argumentos:
+```Javascript
+var addTwoAndThreeAndTheseTwoUp = addTheseFourUp.bind(this, 2, 3);
+addTwoAndThreeAndTheseTwoUp(1, 2); //=> 8
+```
+Pero si queremos currificar `addTheseFourUp()` sin librerías, una manera de hacerlo es
+```Javascript
+function curriedFour(a) {
+    return function(b) {
+        return function(c) {
+            return function (d) {
+                return a + b + c + d;
+            }
+        }
+    }
+}
+curriedFour(1)(2)(3)(4); //=> 10
+```
+
+Para hacerlo de manera automática, independiente de la función de entrada, tendríamos que recurrir a métodos más complejos:
+```JavaScript
+function curry(fn) {
+    var args = [].slice.call(arguments, 1);
+    function curried(fnArgs) {
+        if (fnArgs.length >= fn.length) {
+            return fn.apply(null, fnArgs);
+        }
+
+        return function () {
+            return curried(fnArgs.concat([].slice.apply(arguments)));
+        };
+    }
+    return curried(args);
+}
+
+function mult(a, b) {	return a*b; }
+
+var multCurr = curry(mult)
+var multByTwo = multCurr(2)
+var twoTimesThree = multByTwo(3) //=> 6
+var twoTimesFour = multByTwo(4) //=> 8
+```
+
+### ES6
+Por suerte asdsd
 
 ## Implementaciones
-Tanto las librerías Underscore.js como Ramda.js cuentan con funciones para precisamente la aplicación parcial de funciones. Veamos algunos ejemplos:
+<!--- Tanto las librerías Underscore.js como Ramda.js cuentan con funciones para precisamente la aplicación parcial de funciones. Veamos algunos ejemplos:--->
+Existen variadas librerías que tienen implementados estos métodos para su ágil uso. Algunas de ellas son:
+
+### Wu.js
+
 ### Underscore.js
 `_.partial`
 ```JavaScript
