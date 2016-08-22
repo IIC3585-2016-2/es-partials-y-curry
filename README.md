@@ -20,34 +20,20 @@ En la sección de más abajo mostraremos una comparativa de cómo se realizaba e
 
 ### Currying
 <!--- Ahora por otra parte, tenemos la currificación, o currying. --->
-Esta técnica consiste en que una función de aridad mayor a uno se transforme finalmente en una de aridad uno. Esto se realiza convirtiendo la función en una cadena de múltiples funciones de aridad uno en la que cada una vaya recibiendo uno a uno los parámetros que en su origen ésta requería. Así, se van retornando funciones hasta que finalmente se hayan rellenado todos los parámetros y se retorne el mismo resultado final de la función original.
+Esta técnica consiste en que una función de aridad mayor a uno se transforme finalmente en una de aridad uno. Esto se realiza convirtiendo la función en una cadena de múltiples funciones de aridad uno en la que cada una vaya recibiendo uno a uno los parámetros que en su origen ésta requería. Así, se van retornando funciones hasta que finalmente se hayan rellenado todos los parámetros y se retorne el mismo resultado final de la función original. En otras palabras, un curry es una función que irá retornando nuevas funciones (otros currys) hasta que reciba todos sus argumentos.
 <!--- Con explicaciones es cierto que suena  complicado y confuso, e incluso de cierta manera igual que lo que vimos en la sección anterior, pero  aquí dejamos un ejemplo: --->
-
-Como ejemplo, currificaremos la misma función del ejemplo anterior
+Como ejemplo, currificaremos la misma función del ejemplo anterior. Si le aplicásemos currying de manera manual, la función tendría que ser creada de la siguiente manera:
 <!--- Primero, la volveremos a mostrar de manera tradicional:
 var filtrar = (lista,tipo,filtro) => {...}; --->
-
-Ahora, si le aplicásemos currying de manera manual, para que se cumpliese lo dicho previamente, la funsión tiene que ser creada de la siguiente manera:
-
-var filtrarCurrificado = (lista)=>(tipo)=>(filtro)=> {...};
-
-Podemos notar que tenemos una seguidilla de operadores lambda (funsión flecha) que nos crean de manera encadenada una funsión tras otra que van retornando entre sí una funsión nueva, hasta que se rellenen los tres parámetros. por ejemplo, si llamamos a la función:
-
-filtrarCurrificado(lista);
-
-nos retornará una nueva función, que tomará por parámetro ahora el tipo que queremos aplicar. tendríamos entonces que hacer:
-
+```JavaScript
+var filtrarCurrificado = (lista) => (tipo) => (filtro) => ...;
+```
+Podemos notar que tenemos una seguidilla de funciones que nos crean de manera encadenada una función tras otra que van retornando sucesivamente funciones nuevas hasta que se rellenen los tres parámetros. Por ejemplo la función `filtrarCurrificado(lista)` nos retornará una nueva función que toma por parámetro el tipo que queremos aplicar. Para pasarle el tipo podemos hacer
+```JavaScript
 var filtrarConLista = filtrarCurrificado(lista);
-
-Ahora, tenemos que entregarle el tipo:
-
-var filtrarContipoYLista = filtroCOnLista(tipo);
-
-Ahora, nos retornó una última funsión que está esperando el filtro a aplicar, para finalmente ordenar la lista, con el tipo que le dimos a lo largo de todos estos pasos:
-
-var listaOrdenada = filtrarConListaYTipo(filtro);
-
-Y listo.
+var filtrarConTipoYLista = filtrarConLista(tipo);
+```
+Ahora, nos retornó una última funsión que está esperando el filtro a aplicar, para finalmente ordenar la lista, con el tipo que le dimos a lo largo de todos estos pasos: `JavaScript var listaOrdenada = filtrarConListaYTipo(filtro); `
 
 Parece engorroso a simplemente vista, pero si uno crea una función desde el principio, no es necesario tampoco hacer todos estos pasos, si uno no desea crear cada uno de los, llámese subfiltros. por ejemplo, podríamos llamar directamente a la función completa. Tan sólo que donde sabemos que la primera retorna una función, la segunda ídem, y ya la tercera nos retorna la lista, pues, tenemos que entregarle a cada una de ellas su parámetro de manera separada a los demás, miren:
 
