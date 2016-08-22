@@ -19,7 +19,7 @@ La aplicación partcial,
 ### Currying
 Bliblubla
 
-## Ejemplos
+## Ejemplos Básicos
 blablablalblabblaabl
 ```JavaScript
 // Blabla
@@ -29,6 +29,24 @@ const sumaCurrificada = (x) => (y) => x + y;
 
 ## Currying en ES5 vs ES6
 Lo que dice acá por ejemplo: https://gist.github.com/ryanseddon/7330082
+
+## Implementaciones
+Tanto las librerías Underscore.js como Ramda.js cuentan con funciones para precisamente la aplicación parcial de funciones. Veamos algunos ejemplos:
+### Underscore.js
+`_.partial`
+```JavaScript
+var subtract = (a, b) => { b - a };
+sub5 = _.partial(subtract, 5);
+sub5(20);
+=> 15
+
+// Using a placeholder
+subFrom20 = _.partial(subtract, _, 20);
+subFrom20(5);
+=> 15
+```
+
+### Ramda.js
 
 ## ...¿y para qué sirve?
 https://hughfdjackson.com/javascript/why-curry-helps/
