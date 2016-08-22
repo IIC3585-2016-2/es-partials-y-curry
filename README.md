@@ -145,7 +145,7 @@ getOdds([1, 2, 3, 4, 5]); //=> [1, 3, 5]
 ```
 
 ### Underscore.js
-En Underscore tenemos [una función](http://underscorejs.org/#partial) que permite la aplicación parcial (`_.partial`) de funciones de manera inmediata:
+En Underscore tenemos [una función](http://underscorejs.org/#partial) que permite la aplicación parcial (`_.partial()`) de funciones de manera inmediata:
 ```JavaScript
 var sub = (a, b) => b - a;
 sub5 = _.partial(sub, 5);
@@ -156,6 +156,15 @@ Una ventaja de usar esta implementación es que Underscore permite la especifica
 subFrom20 = _.partial(subtract, _, 20);
 subFrom20(5); //=> 15
 ```
+
+### Lodash
+Se implementa `_.partial` de la misma forma que Underscore, sólo que acá también se tiene` _.partialRight()` en la que el primer argumento para pasárselo a la función entra como último de la función currificada:
+```JavaScript
+var sub = (a, b) => b - a;
+sub5 = _.partialRight(sub, 5);
+sub5(20); //=> -15
+```
+Adicionalmente se cuenta con funciones currificadoras `_.curry(func, [arity=fn.length])` (que actúa de la misma forma que en Wu) y `_.curryRight(func, [arity=fn.length])`.
 
 ### Ramda.js
 Con [Ramda](http://ramdajs.com/docs/#curry) también podemos hacer uso del valor placeholder. Si `f(...args)` es la función a currificar y `var g = R.curry(f)`, entonces las siguientes son equivalentes:
