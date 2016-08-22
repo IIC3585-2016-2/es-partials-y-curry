@@ -119,6 +119,30 @@ function curry(fn, ...args) {
 Existen variadas librerías que tienen implementados estos métodos para su ágil uso. Algunas de ellas son:
 
 ### Wu.js
+En [Wu.js](https://fitzgen.github.io/wu.js/#curryable) encontramos un decorador `.curryable()` que currifica automáticamente la función a la que se lo aplicamos. Opcionalmente se le puede pasar el número máximo de argumentos para currificar como segundo argumento:
+```Javascript
+var add = wu.curryable((a, b, c) => a + b + c);
+
+add(1)(1)(1); //=> 3
+add(1)()(1)()(1); //=> 3
+add(1)(1, 1); //=> 3
+add(1, 1, 1); //=> 3
+```
+
+```Javascript
+var modulo = wu.curryable((divisor, dividend) => dividend % divisor);
+var isOdd = modulo(2);
+
+isOdd(6); //=> 0
+isOdd(7); //=> 1
+
+var filter = function(f, xs) {
+  return xs.filter(f);
+}.curryable();
+
+var getOdds = filter(isOdd);
+getOdds([1, 2, 3, 4, 5]); //=> [1, 3, 5]
+```
 
 ### Underscore.js
 `_.partial`
