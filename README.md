@@ -2,44 +2,30 @@
 
 ## ¿Diferencia entre *aplicación parcial* y *currificación*? 
 
-La aplicación parcial (partial aplication) y la currificación (currying) ambas son técnicas de programasión que sirven para especificar una función que en su creación, fue planteada de manera más general o genérica.
-no obstante, aunque ambas técnicas intenten cumplir un objetivo similar,, poseen sutiles diferencias que las hacen a fin de cuentas la una diferente de la otra.
-Tal como podemos leer en el siguiente artículo: ( https://medium.com/javascript-scene/curry-or-partial-application-8150044c78b8#.fai0znu0q )
-o en este otro ( http://raganwald.com/2013/03/07/currying-and-partial-application.html )
-Podemos notar que cada uno busca cumplir un objetivo similar, pero no igual. Procederemos a explicarlos cada uno:
-
-Antes de proceder, recordaremos algo escencial. La aridad de una funsión, se define como la cantidad de parámetros que recibe ésta. Con esto, podemos tener funsiones unarias, que son las de aridad uno. Luego binarias, terciarias, tetrarias y así siguiendo la regla de números griegos.
-Esto lo damos a conocer, precisamente porque una de las diferencias entre aplicación parcial y currificación radica en la aridad de las funciones utilizadas, y las resultantes.
-
+La aplicación parcial y la currificación son técnicas de programación que sirven para especificar una función que en su creación, fue planteada de manera más genérica. Si bien se refieren a algo similar, estos conceptos poseen sutiles diferencias que las hacen a fin de cuentas diferentes.
+Antes de proceder recordemos algo esencial. La **aridad** de una función se define como la cantidad de parámetros que recibe ésta. Con esto, podemos tener funciones unarias, que son las de aridad uno. Luego binarias, terciarias, tetrarias y así siguiendo la regla de números griegos. Esto lo damos a conocer precisamente porque una de las diferencias entre aplicación parcial y currificación radica en la aridad de las funciones utilizadas y de las resultantes.
 
 ### Aplicación Parcial
 
-La aplicación parcial, es cuando una función general se reduce en parámetros para poder cumplir una función más puntual.
-
-Por ejemplo, consideremos que tenemos una función que busca en una lista genérica, los elementos de un tipo dado, y además aplica un filtro válido sobre aquel tipo. Su firma sería algo así como:
-
-var filtrar=(lista,tipo,filtro)=> { ...}
-
-pero ahora, queremos aplicar una aplicación parcial sobre esta función, para crear una nueva función, que haga exactamente lo mismo, pero sabemos que es solamente para filtrar strings.
-
-En este caso, sí estamos aplicando una aplicación parcial, porque sólo reduciremos en un parámetro, y nada más. Ejemplo:
-
+La aplicación parcial es cuando una función general se reduce en parámetros para poder cumplir una función más puntual. En otras palabras, se aplica parcialmente una función cuando devolvemos otra función con *algunos* de sus argumentos fijados. Por ejemplo, consideremos que tenemos una función que busca en una lista genérica, los elementos de un tipo dado, y además aplica un filtro válido sobre aquel tipo. Su firma sería algo así como:
+```JavaScript
+var filtrar = (lista,tipo,filtro) =>  ... ;
+```
+pero ahora queremos aplicar este filtro sólo para tipos, por ejemplo, string. Para eso aplicamos parcialmente la función anterior de la siguiente manera:
+```JavaScript
 var filtrarStrings => (lista,filtro) => filtrar(lista,"String",filtro);
-
-Ahora bien, si se fijan, en el ejemplo dado arriba, utilizamos notación con funciones lambda, al estilo de ES6. Era posible antes en ES5 hacer lo mismo, pero requería un código más engorroso y verboso que el puesto acá arriba, que es limpio y fácil de leer.
-En la sección de más abajo mostraremos una comparativa de cómo se realizaba esto en antaño con ES6.
+```
+<!--- Ahora bien, si se fijan, en el ejemplo dado arriba, utilizamos notación con funciones lambda, al estilo de ES6. Era posible antes en ES5 hacer lo mismo, pero requería un código más engorroso y verboso que el puesto acá arriba, que es limpio y fácil de leer.
+En la sección de más abajo mostraremos una comparativa de cómo se realizaba esto en antaño con ES6. --->
 
 ### Currying
+<!--- Ahora por otra parte, tenemos la currificación, o currying. --->
+Esta técnica consiste en que una función de aridad mayor a uno se transforme finalmente en una de aridad uno. Esto se realiza convirtiendo la función en una cadena de múltiples funciones de aridad uno en la que cada una vaya recibiendo uno a uno los parámetros que en su origen ésta requería. Así, se van retornando funciones hasta que finalmente se hayan rellenado todos los parámetros y se retorne el mismo resultado final de la función original.
+<!--- Con explicaciones es cierto que suena  complicado y confuso, e incluso de cierta manera igual que lo que vimos en la sección anterior, pero  aquí dejamos un ejemplo: --->
 
-Ahora por otra parte, tenemos la currificación, o currying.
-Esta técnica, consiste en que una funsión de aridad mayor a uno, independientemente de cuánto sea esta, se transforme finalmente a una funsión de aridad uno. Esto se realiza, convirtiendo la funsión en una cadena de múltiples funsiones de aridad uno que cada una va reciviendo uno a uno los parámetros que en su origen ésta requería, y va retornando una nueva funsión, hasta que finalmente se hayan rellenado todos los parámetros y  se retorne el mismo  resultado final.
-Con explicaciones es cierto que suena  complicado y confuso, e incluso de cierta manera igual que lo que vimos en la sección anterior, pero  aquí dejamos un ejemplo:
-
-utilizaremos nuestra misma funsión filtrar del ejemplo anterior:
-
-Primero, la volveremos a mostrar de manera tradicional:
-
-var filtrar = (lista,tipo,filtro) => {...};
+Como ejemplo, currificaremos la misma función del ejemplo anterior
+<!--- Primero, la volveremos a mostrar de manera tradicional:
+var filtrar = (lista,tipo,filtro) => {...}; --->
 
 Ahora, si le aplicásemos currying de manera manual, para que se cumpliese lo dicho previamente, la funsión tiene que ser creada de la siguiente manera:
 
