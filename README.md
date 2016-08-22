@@ -9,7 +9,7 @@ Antes de proceder recordemos algo esencial. La **aridad** de una función se def
 
 La aplicación parcial es cuando una función general se reduce en parámetros para poder cumplir una función más puntual. En otras palabras, se aplica parcialmente una función cuando devolvemos otra función con *algunos* de sus argumentos fijados. Por ejemplo, consideremos que tenemos una función que busca en una lista genérica, los elementos de un tipo dado, y además aplica un filtro válido sobre aquel tipo. Su firma sería algo así como:
 ```JavaScript
-var filtrar = (lista,tipo,filtro) =>  ... ;
+var filtrar = (lista,tipo,filtro) =>  { ... };
 ```
 pero ahora queremos aplicar este filtro sólo para tipos, por ejemplo, string. Para eso aplicamos parcialmente la función anterior de la siguiente manera:
 ```JavaScript
@@ -26,7 +26,7 @@ Como ejemplo, currificaremos la misma función del ejemplo anterior. Si le aplic
 <!--- Primero, la volveremos a mostrar de manera tradicional:
 var filtrar = (lista,tipo,filtro) => {...}; --->
 ```JavaScript
-var filtrarCurrificado = (lista) => (tipo) => (filtro) => ...;
+var filtrarCurrificado = (lista) => (tipo) => (filtro) => { ... };
 ```
 Podemos notar que tenemos una seguidilla de funciones que nos crean de manera encadenada una función tras otra que van retornando sucesivamente funciones nuevas hasta que se rellenen los tres parámetros. Por ejemplo la función `filtrarCurrificado(lista)` nos retornará una nueva función que toma por parámetro el tipo que queremos aplicar. Para pasarle el tipo podemos hacer
 ```JavaScript
