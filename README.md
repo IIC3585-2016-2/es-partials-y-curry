@@ -168,7 +168,7 @@ Adicionalmente se cuenta con funciones currificadoras `_.curry(fn, [arity=fn.len
 
 ### Ramda.js
 Con [Ramda](http://ramdajs.com/docs/#curry) también podemos hacer uso del valor placeholder. Si `f(...args)` es la función a currificar y `var g = R.curry(f)`, entonces las siguientes son equivalentes:
-````Javascript
+```Javascript
 g(1, 2, 3)
 g(_, 2, 3)(1)
 g(_, _, 3)(1)(2)
